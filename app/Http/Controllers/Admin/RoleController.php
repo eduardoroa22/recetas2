@@ -13,6 +13,12 @@ use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
+    public function __construct(){
+        $this->middleware('can:Listar rol')->only('index');
+        $this->middleware('can:Crear rol')->only('create','store');
+        $this->middleware('can:Editar rol')->only('edit','update');
+        $this->middleware('can:Eliminar rol')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -101,7 +107,7 @@ class RoleController extends Controller
         ]);
 
         $role->update([
-            'name' =>$request->name
+            'name' => $request->name
         ]);
 
         $role->permissions()->sync($request->permissions);

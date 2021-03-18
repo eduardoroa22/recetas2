@@ -15,7 +15,7 @@
             @empty
             <li class=" leading-10 px-5 text-xs cursor-pointer hover:bg-gray-300">
                 no hay nada
-                </li>
+            </li>
         @endforelse  
     </ul>
  @endif             

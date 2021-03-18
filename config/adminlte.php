@@ -238,13 +238,24 @@ return [
             'text'        => 'escritorio',
             'route'         => 'admin.roles.index',
             'icon'        => 'fas fas-fw fa-tachometer-alt',
+            'can'=> 'Ver escritorio'
             
         ],
         [
             'text'        => 'Lista de Roles',
-            'route'         => 'admin.roles.index',
+            'route'       => 'admin.roles.index',
             'icon'        => 'fas fa-fw fa-users-cog',
-            'active' =>  ['admin/roles*']
+            'active'      =>  ['admin/roles*'],
+            'can'=> 'Listar rol'
+            
+        ],
+        [ 	
+            
+            'text'        => 'Usuarios',
+            'route'       => 'admin.users.index',
+            'icon'        => 'fas fa-fw fa-users',
+            'active'      =>  ['admin/users*'],
+            'can'=> 'Leer usuarios'
             
         ],
         ['header' => 'account_settings'],
@@ -432,5 +443,5 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/9.-Other-Configuration
     */
 
-    'livewire' => false,
+    'livewire' => true,
 ];
