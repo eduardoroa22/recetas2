@@ -17,12 +17,6 @@ class CategorySeeder extends Seeder
         Category::create([
             'name'=>'desarrolo web'
         ]);
-        Category::create([
-            'name'=>'diseño web'
-        ]);
-        Category::create([
-            'name'=>'programacion'
-        ]);
-    
+        
     }
 }

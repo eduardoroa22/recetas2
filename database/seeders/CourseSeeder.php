@@ -9,6 +9,7 @@ use App\Models\Goal;
 use App\Models\Image;
 use App\Models\Lesson;
 use App\Models\Requirement;
+use App\Models\Review;
 use App\Models\section;
 use Illuminate\Database\Seeder;
 
@@ -21,9 +22,13 @@ class CourseSeeder extends Seeder
      */
     public function run()
     {
-        $courses=Course::factory(100)->create();
+        $courses=Course::factory(1)->create();
 
         foreach ($courses as $course) {
+
+                Review::factory(5)->create([
+                    'course_id'=>$course->id
+                ]);
                 Image::factory(1)->create([
                     'imageable_id'=>$course->id,
                     'imageable_type'=>'App\Models\Course'

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Instructor;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\price;
 
-use App\Models\Course;
 
-class CourseCpntroller extends Controller
+class PriceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,8 @@ class CourseCpntroller extends Controller
      */
     public function index()
     {
-        return view('instructor.courses.index');
+        $prices=price::all();
+        return view('admin.prices.index', compact('prices'));
     }
 
     /**
@@ -26,7 +27,7 @@ class CourseCpntroller extends Controller
      */
     public function create()
     {
-        return view('instructor.courses.create');
+        return view('admin.prices.create');
     }
 
     /**
@@ -37,7 +38,14 @@ class CourseCpntroller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>'required|unique:prices',
+            'value'=>'required|numeric'
+        ]);
+        $price=price::create($request->all());
+        
+        return redirect()->route('admin.prices.edit', compact('price'))->with('info', 'el precio se creo con exito');
+ 
     }
 
     /**
@@ -46,9 +54,9 @@ class CourseCpntroller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function show($price)
     {
-        return view('instructor.courses.show', compact('course'));
+        //
     }
 
     /**
@@ -57,9 +65,9 @@ class CourseCpntroller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Course $course)
+    public function edit(price $price)
     {
-        return view('instructor.courses.edit', compact('course'));
+       return view('admin.prices.edit', compact('price'));
     }
 
     /**
@@ -69,9 +77,15 @@ class CourseCpntroller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, price $price)
     {
-        //
+        $request->validate([
+            'name'=>'required|unique:prices,name.' . $price->id,
+            'value'=>'required|numeric'
+        ]);
+        $price->update($request->all());
+        return redirect()->route('admin.prices.edit', compact('price'))->with('info', 'el precio se actualizo con exito');
+
     }
 
     /**
@@ -80,8 +94,10 @@ class CourseCpntroller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
+    public function destroy(price $price)
     {
-        //
+        $price->delete();
+        return redirect()->route('admin.prices.index')->with('info', 'el precio se elimino con exito');
+
     }
 }

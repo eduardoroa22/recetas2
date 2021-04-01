@@ -63,7 +63,7 @@
             </section>
 
             <section class="mb-8">
-                <h1 class=" font-bold text-3xl">Requisitos</h1>
+                <h1 class=" font-bold text-3xl text-gray-800">Requisitos</h1>
 
                 <ul class=" list-disc list-inside">
                     @foreach ($course->requirements as $requireme)
@@ -73,11 +73,14 @@
             </section>
 
             <section class=" mb-8">
-                <h1 class=" font-bold text-3xl">Descripcion</h1>
+                <h1 class=" font-bold text-3xl text-gray-800">Descripcion</h1>
                 <div class=" text-gray-700 text-base">
-                    {{$course->description}}
+                    {!!$course->description!!}
                 </div>  
             </section>
+
+            @livewire('course-reviews', ['course' => $course])
+
         </div>
 
         <div class=" order-1 md:order-2 lg:order-2 ">
@@ -91,16 +94,24 @@
                             <a class=" text-blue-400 text-sm font-bold" href="">{{'@' . Str::slug($course->teacher->name, '')}}</a>
                         </div>
                     </div>
+                    
                     @can('enrolled', $course)
 
-                    <a class="btn btn-danger btn-block mt-4 text-xs lg:text-lg" href="{{route('courses.status', $course)}}">continuar con el curso</a>
+                        <a class="btn btn-danger btn-block mt-4 text-xs lg:text-lg" href="{{route('courses.status', $course)}}">continuar con el curso</a>
 
                     @else
-                    <form action="{{route('courses.enrolled', $course)}}" method="POST">
-                        @csrf
-                        <button class="btn btn-danger btn-block mt-4">llevar este curso</button>
-                        
-                    </form>
+                        @if ($course->price->value == 0)
+                        <p class=" text-2xl font-bold text-gray-500 mt-3 mb-2">GRATIS</p>
+                            <form action="{{route('courses.enrolled', $course)}}" method="POST">
+                                @csrf
+                                <button class="btn btn-danger btn-block ">llevar este curso</button>
+                            </form>
+                        @else
+                        <p class=" text-2xl font-bold text-gray-500 mt-3 mb-2">US$ {{$course->price->value}}</p>
+
+
+                            <a  href="{{route('payment.checkout', $course)}}" class="btn btn-danger btn-block ">Comprar este curso</a>
+                        @endif
                     @endcan
                         
 

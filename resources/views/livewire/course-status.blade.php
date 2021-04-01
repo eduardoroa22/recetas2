@@ -16,17 +16,32 @@
         </div>
           
       @endif
+{{-- marcar como culminado --}}
+      <div class="flex justify-between mt-4">
 
-      <div class="flex items-center mt-4 cursor-pointer" wire:click="completed">
+        <div class="flex items-center cursor-pointer" wire:click="completed">
 
-        @if ($currents->completed)
-        <i class="fas fa-toggle-on text-2xl text-blue-600 transition-all duration-1000"></i>
+          @if ($currents->completed)
+              <i class="fas fa-toggle-on text-2xl text-blue-600 transition-all duration-1000"></i>
+            @else
+              <i class="fas fa-toggle-off text-2xl text-gray-600 transition-all duration-1000"></i>
+          @endif
+
+              <p class=" text-sm ml-2">Marcar como culminada</p>
+        </div>
+        @if ($currents->resource)
+          <div wire:click="download" class="flex items-center text-gray-600 cursor-pointer">
+            <i class="fas fa-download text-lg"></i>
+            <p class=" text-sm ml-2">descargar recurso</p>
+          </div>
         @else
-        <i class="fas fa-toggle-off text-2xl text-gray-600 transition-all duration-1000"></i>
+            
         @endif
+        
 
-        <p class=" text-sm ml-2">Marcar como culminada</p>
       </div>
+        
+      
 
       <div class="card mt-2">
         <div class="card-body flex text-gray-500 font-bold">
